@@ -1,11 +1,13 @@
 <?php
 
-$input = file_get_contents(__DIR__ . '/../input.txt');
+$input = array_filter(
+    explode(PHP_EOL, file_get_contents(__DIR__ . '/../input.txt'))
+);
 
 $list = array_map(function ($id) {
     $chars = str_split($id);
     return compact('id', 'chars');
-}, array_filter(explode(PHP_EOL, $input)));
+}, $input);
 
 $prototypes = array_reduce($list, function ($carry, $item) use ($list) {
     foreach ($list as $other) {
