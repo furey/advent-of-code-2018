@@ -1,6 +1,6 @@
 <?php
 
-$input = file_get_contents(__DIR__ . '/input.txt');
+$input = file_get_contents(__DIR__ . '/../input.txt');
 
 $changes = array_map(function ($change) {
     $operator = $change[0];

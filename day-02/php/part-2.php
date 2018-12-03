@@ -1,6 +1,6 @@
 <?php
 
-$input = file_get_contents(__DIR__ . '/input.txt');
+$input = file_get_contents(__DIR__ . '/../input.txt');
 
 $list = array_map(function ($id) {
     $chars = str_split($id);

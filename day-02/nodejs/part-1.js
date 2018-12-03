@@ -1,7 +1,7 @@
 const fs = require('fs');
 const countChars = require('./utils/count-chars');
 
-const input = fs.readFileSync(__dirname + '/input.txt', 'utf-8');
+const input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
 const ids = input
   .split('\n')

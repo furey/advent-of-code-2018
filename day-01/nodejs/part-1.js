@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const input = fs.readFileSync(__dirname + '/input.txt', 'utf-8');
+const input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
 const changes = input
   .split('\n')

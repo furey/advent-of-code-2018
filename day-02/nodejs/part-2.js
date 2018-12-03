@@ -2,7 +2,7 @@ const fs = require('fs');
 const difference = require('./utils/difference');
 const intersection = require('./utils/intersection');
 
-const input = fs.readFileSync(__dirname + '/input.txt', 'utf-8');
+const input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
 const ids = input
   .split('\n')
