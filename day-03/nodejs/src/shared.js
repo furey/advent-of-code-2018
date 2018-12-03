@@ -20,7 +20,7 @@ input.forEach(claim => {
 
 const fabric = {};
 
-Object.entries(claims).forEach(([id, claim]) => {
+Object.entries(claims).forEach(([, claim]) => {
   for (let y = claim['y']; y < claim['y'] + claim['h']; y++) {
     for (let x = claim['x']; x < claim['x'] + claim['w']; x++) {
       const pos = `${x},${y}`;
