@@ -17,7 +17,7 @@ const operations = {
 };
 
 let frequency = 0;
-let frequencies = [];
+const frequencies = [];
 let firstFrequencyReachedTwice = null;
 
 while (firstFrequencyReachedTwice === null) {
