@@ -1,4 +1,6 @@
 const fs = require('fs');
+const difference = require('./utils/difference');
+const intersection = require('./utils/intersection');
 
 const input = fs.readFileSync(__dirname + '/input.txt', 'utf-8');
 
@@ -10,30 +12,6 @@ const list = ids.map(id => ({
   id,
   chars: id.split(''),
 }));
-
-function difference(a1, a2)
-{
-  const diff = {};
-  for (var i = 0; i < a1.length; i++) {
-    const a1value = a1[i];
-    const a2value = a2[i] || null;
-    if (a1value === a2value) continue;
-    diff[i] = a2value;
-  }
-  return diff;
-}
-
-function intersection(a1, a2)
-{
-  const same = {};
-  for (var i = 0; i < a1.length; i++) {
-    const a1value = a1[i];
-    const a2value = a2[i] || null;
-    if (a1value !== a2value) continue;
-    same[i] = a2value;
-  }
-  return same;
-}
 
 const prototypes = list.reduce((carry, item) => {
   const {id, chars} = item;

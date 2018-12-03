@@ -1,23 +1,11 @@
 const fs = require('fs');
+const countChars = require('./utils/count-chars');
 
 const input = fs.readFileSync(__dirname + '/input.txt', 'utf-8');
 
 const ids = input
   .split('\n')
   .filter(id => id.length);
-
-function countChars(string) {
-  const chars = {};
-  for (var i = 0; i < string.length; i++) {
-    const char = string[i];
-    if (chars[char] !== undefined) {
-      chars[char]++;
-    } else {
-      chars[char] = 1;
-    }
-  }
-  return chars;
-}
 
 const counts = ids.map(id => {
   return Object.entries(countChars(id))
