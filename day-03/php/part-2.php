@@ -1,11 +1,11 @@
 <?php
 
-list($claims, $claimedFabric) = require(__DIR__ . '/src/shared.php');
+list($claims, $fabric) = require(__DIR__ . '/src/shared.php');
 
-$intactFabric = array_filter($claims, function ($claim) {
+$nonOverlappingClaims = array_filter($claims, function ($claim) {
     return !isset($claim['overlaps']);
 });
 
-$intactFabricId = current($intactFabric)['id'];
+$nonOverlappingClaimId = current($nonOverlappingClaims)['id'];
 
-echo "intact fabric id: $intactFabricId";
+echo "non-overlapping claim id: $nonOverlappingClaimId";

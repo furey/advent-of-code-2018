@@ -1,9 +1,9 @@
 <?php
 
-list($claims, $claimedFabric) = require(__DIR__ . '/src/shared.php');
+list($claims, $fabric) = require(__DIR__ . '/src/shared.php');
 
-$sharedFabric = count(array_filter($claimedFabric, function ($claimIds) {
+$sharedInchesOfFabric = count(array_filter($fabric, function ($claimIds) {
     return count($claimIds) >= 2;
 }));
 
-echo "shared fabric: $sharedFabric";
+echo "shared inches of fabric: $sharedInchesOfFabric";
