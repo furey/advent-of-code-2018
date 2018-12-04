@@ -1,7 +1,5 @@
 <?php
 
-ini_set('memory_limit', -1);
-
 $sortBy = require(__DIR__ . '/src/sortBy.php');
 $rsortBy = require(__DIR__ . '/src/rsortBy.php');
 
@@ -23,15 +21,6 @@ $sortBy($entries, function ($entry) {
     return $entry['date']->getTimestamp();
 });
 
-function debug($entry, $id, $message) {
-    echo sprintf(
-        '[%s] %d: %s',
-        $entry['date']->format('Y-m-d H:i'),
-        $id,
-        $message
-    ) . PHP_EOL;
-}
-
 $guards = [];
 $id = null;
 
@@ -48,7 +37,6 @@ foreach ($entries as $entry) {
         }
     }
     $guard = &$guards[$id];
-    debug($entry, $id, $entry['observation']);
     switch ($entry['observation']) {
         case 'falls asleep':
             $guard['start'] = $entry['date']->modify('0 sec');
@@ -56,7 +44,6 @@ foreach ($entries as $entry) {
         case 'wakes up':
             if (isset($guard['start'])) {
                 $minutes = $entry['date']->diff($guard['start'])->i;
-                debug($entry, $id, "...was asleep for $minutes minutes");
                 $startMinutes = (int) $guard['start']->format('i');
                 $endMinutes = $startMinutes + $minutes;
                 for ($m = $startMinutes; $m < $endMinutes; $m++) {
@@ -80,10 +67,18 @@ $rsortBy($guards, function ($guard) {
 
 $sleepiestGuard = $guards[0];
 
+$sleepiestGuardId = $sleepiestGuard['id'];
+
 arsort($sleepiestGuard['minutes']);
 
 $sleepiestMinute = key($sleepiestGuard['minutes']);
 
-$idMultipliedByMinute = (int) $sleepiestGuard['id'] * (int) $sleepiestMinute;
+$idMultipliedByMinute = (int) $sleepiestGuardId * (int) $sleepiestMinute;
 
-echo "sleepiest guard id multiplied by sleepiest minute: $idMultipliedByMinute";
+echo implode(PHP_EOL, [
+    "sleepiest guard id: $sleepiestGuardId",
+    '*',
+    "sleepiest minute: $sleepiestMinute",
+    '=',
+    $idMultipliedByMinute
+]);
