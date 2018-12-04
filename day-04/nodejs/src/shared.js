@@ -1,4 +1,5 @@
 const fs = require('fs');
+const sortBy = require('./sortBy');
 const rsortBy = require('./rsortBy');
 
 module.exports = function (sortGuards)
@@ -9,16 +10,15 @@ module.exports = function (sortGuards)
     .split('\n')
     .filter(s => s.length);
 
-  const entries = input.map(entry => {
+  let entries = input.map(entry => {
     const [date, observation] = entry.split(/^\[(.*)\] (.*)$/).filter(s => s.length);
     return {
       date: new Date(date),
       observation,
     };
-  }).sort((a, b) => {
-    if (a.date.getTime() === b.date.getTime()) return 0;
-    return a.date < b.date ? -1 : 1;
   });
+
+  entries = sortBy(entries, entry => entry.date.getTime());
 
   let id = null;
 
