@@ -11,7 +11,7 @@ $results = array_map(function ($type) use ($polymer, $react) {
     return compact('type', 'length');
 }, str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'));
 
-$sortBy($results, function ($result) {
+$results = $sortBy($results, function ($result) {
     return $result['length'];
 });
 

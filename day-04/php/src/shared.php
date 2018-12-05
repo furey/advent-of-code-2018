@@ -19,7 +19,7 @@ $entries = array_map(function ($entry) {
     return compact('date', 'observation');
 }, $input);
 
-$sortBy($entries, function ($entry) {
+$entries = $sortBy($entries, function ($entry) {
     return $entry['date']->getTimestamp();
 });
 
@@ -63,7 +63,7 @@ foreach ($entries as $entry) {
     }
 }
 
-$rsortBy($guards, $sortGuards);
+$guards = $rsortBy($guards, $sortGuards);
 
 $sleepiestGuard = $guards[0];
 $sleepiestGuardId = $sleepiestGuard['id'];
