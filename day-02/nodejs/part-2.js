@@ -1,6 +1,6 @@
 const fs = require('fs');
-const difference = require('./utils/difference');
-const intersection = require('./utils/intersection');
+const difference = require('./src/difference');
+const intersection = require('./src/intersection');
 
 const input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
