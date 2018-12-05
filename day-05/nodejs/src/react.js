@@ -1,5 +1,5 @@
 module.exports = function (polymer) {
-  let units = polymer.split('');
+  const units = polymer.split('');
   let index = 0;
   while (true) {
     if (index === units.length - 1) break;
