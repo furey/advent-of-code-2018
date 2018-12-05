@@ -1,16 +1,15 @@
 module.exports = function (polymer) {
-  const units = polymer.split('');
-  let index = 0;
+  let index = 0, a, b;
   while (true) {
-    if (index === units.length - 1) break;
-    a = units[index];
-    b = units[index + 1];
+    if (index === polymer.length - 1) break;
+    a = polymer[index];
+    b = polymer[index + 1];
     if (a.toUpperCase() === b.toUpperCase() && a !== b) {
-      units.splice(index, 2);
+      polymer = polymer.slice(0, index) + polymer.slice(index + 2);
       index = Math.max(0, index - 1);
       continue;
     }
     index++;
   }
-  return units.join('');
+  return polymer;
 };
