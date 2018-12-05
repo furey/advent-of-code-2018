@@ -10,11 +10,11 @@ while ($firstFrequencyReachedTwice === null) {
     for ($i = 0; $i < count($changes); $i++) {
         $change = $changes[$i];
         $frequency = $operations[$change['operator']]($frequency, $change['value']);
-        if (in_array($frequency, $frequencies)) {
+        if (array_key_exists($frequency, $frequencies)) {
             $firstFrequencyReachedTwice = $frequency;
             break;
         }
-        $frequencies[] = $frequency;
+        $frequencies[$frequency] = true;
     }
 }
 
