@@ -7,7 +7,7 @@ return function ($polymer) {
         $a = $polymer[$index];
         $b = $polymer[$index + 1];
         if (strtoupper($a) === strtoupper($b) && $a !== $b) {
-            $polymer = preg_replace("/$a$b/", '', $polymer, 1);
+            $polymer = substr_replace($polymer, '', $index, 2);
             $index = max(0, $index - 1);
             continue;
         }
