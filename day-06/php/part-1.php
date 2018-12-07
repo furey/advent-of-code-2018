@@ -1,6 +1,7 @@
 <?php
 
 $sortBy = require(__DIR__ . '/src/sortBy.php');
+$styles = require(__DIR__ . '/src/styles.php');
 $rsortBy = require(__DIR__ . '/src/rsortBy.php');
 $distance = require(__DIR__ . '/src/distance.php');
 
@@ -32,20 +33,13 @@ $bounds = [
     'y' => [$byY[0]['y'], end($byY)['y']],
 ];
 
-$style = [
-  'reset' => "\e[0m",
-  'dim' => "\e[030m",
-  'green' => "\e[032m",
-  'red' => "\e[031m",
-];
-
 $output = '';
 for ($row = $bounds['y'][0]; $row <= $bounds['y'][1]; $row++) {
     for ($col = $bounds['x'][0]; $col <= $bounds['x'][1]; $col++) {
         $key = "$col,$row";
         $pos = ['x' => $col, 'y' => $row];
         if (isset($points[$key])) {
-            $output .= $style['green'] . $points[$key]['code'] . $style['reset'];
+            $output .= $styles['green'] . $points[$key]['code'] . $styles['reset'];
             continue;
         }
         $distances = array_reduce($points, function ($carry, $point) use ($pos, $distance) {
@@ -58,7 +52,7 @@ for ($row = $bounds['y'][0]; $row <= $bounds['y'][1]; $row++) {
         $closest = $sortBy($distances, function ($item) {
             return $item['distance'];
         });
-        $s = $style['dim'];
+        $style = $styles['dim'];
         if ($closest[0]['distance'] === $closest[1]['distance']) {
             $value = '.';
         } else {
@@ -67,10 +61,10 @@ for ($row = $bounds['y'][0]; $row <= $bounds['y'][1]; $row++) {
             $points[$key]['area']++;
         }
         if (in_array($col, $bounds['x']) || in_array($row, $bounds['y'])) {
-            $s = $style['red'];
+            $style = $styles['red'];
             if (isset($points[$key])) $points[$key]['infinite'] = true;
         }
-        $output .= $s . $value . $style['reset'];
+        $output .= $style . $value . $styles['reset'];
     }
     $output .= PHP_EOL;
 }

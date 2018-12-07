@@ -1,6 +1,7 @@
 <?php
 
 $sortBy = require(__DIR__ . '/src/sortBy.php');
+$styles = require(__DIR__ . '/src/styles.php');
 $distance = require(__DIR__ . '/src/distance.php');
 
 $input = array_values(
@@ -30,13 +31,6 @@ $bounds = [
     'y' => [$byY[0]['y'], end($byY)['y']],
 ];
 
-$style = [
-  'reset' => "\e[0m",
-  'dim' => "\e[030m",
-  'green' => "\e[032m",
-  'red' => "\e[031m",
-];
-
 $output = '';
 $size = 0;
 for ($row = $bounds['y'][0]; $row <= $bounds['y'][1]; $row++) {
@@ -45,21 +39,21 @@ for ($row = $bounds['y'][0]; $row <= $bounds['y'][1]; $row++) {
         $pos = ['x' => $col, 'y' => $row];
         $rendered = false;
         if (isset($points[$key])) {
-            $output .= $style['green'] . $points[$key]['code'] . $style['reset'];
+            $output .= $styles['green'] . $points[$key]['code'] . $styles['reset'];
             continue;
         }
         $distanceSum = array_reduce($points, function ($carry, $point) use ($pos, $distance) {
             return $carry + $distance($pos, $point);
         }, 0);
-        $s = $style['dim'];
+        $style = $styles['dim'];
         if ($distanceSum < 10000) {
             $value = '#';
-            $s = $style['red'];
+            $style = $styles['red'];
             $size++;
         } else {
             $value = '.';
         }
-        if (!$rendered) $output .= $s . $value . $style['reset'];
+        if (!$rendered) $output .= $style . $value . $styles['reset'];
     }
     $output .= PHP_EOL;
 }

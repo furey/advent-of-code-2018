@@ -1,6 +1,7 @@
 const fs = require('fs');
 const last = require('./src/last');
 const sortBy = require('./src/sortBy');
+const styles = require('./src/styles');
 const rsortBy = require('./src/rsortBy');
 const distance = require('./src/distance');
 
@@ -26,20 +27,13 @@ const bounds = {
   y: [byY[0][1].y, last(byY)[1].y],
 };
 
-const style = {
-  reset: '\x1b[0m',
-  dim: '\x1b[2m',
-  green: '\x1b[32m',
-  red: '\x1b[31m',
-};
-
 let output = '';
 for (let row = bounds.y[0]; row <= bounds.y[1]; row++) {
   for (let col = bounds.x[0]; col <= bounds.x[1]; col++) {
     let key = `${col},${row}`;
     const pos = { x: col, y: row };
     if (points[key] !== undefined) {
-      output += style.green + points[key].code + style.reset;
+      output += styles.green + points[key].code + styles.reset;
       continue;
     }
     const distances = entries.reduce((carry, [k, p]) => {
@@ -48,7 +42,7 @@ for (let row = bounds.y[0]; row <= bounds.y[1]; row++) {
     }, {});
     const closest = sortBy(Object.entries(distances), ([, d]) => d);
     let value;
-    let s = style.dim;
+    let style = styles.dim;
     if (closest[0][1] === closest[1][1]) {
       value = '.';
     } else {
@@ -57,10 +51,10 @@ for (let row = bounds.y[0]; row <= bounds.y[1]; row++) {
       points[key].area++;
     }
     if (bounds.x.includes(pos.x) || bounds.y.includes(pos.y)) {
-      s = style.red;
+      style = styles.red;
       if (points[key] !== undefined) points[key].infinite = true;
     }
-    output += s + value + style.reset;
+    output += style + value + styles.reset;
   }
   output += '\n';
 }
