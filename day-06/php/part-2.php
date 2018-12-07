@@ -5,15 +5,6 @@ $distance = require(__DIR__ . '/src/distance.php');
 
 $input = file_get_contents(__DIR__ . '/../input.txt');
 
-// $input = '
-// 1, 1
-// 1, 6
-// 8, 3
-// 3, 4
-// 5, 5
-// 8, 9
-// ';
-
 $input = array_values(explode(PHP_EOL, trim($input)));
 
 $i = 0;

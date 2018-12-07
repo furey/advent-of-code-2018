@@ -5,15 +5,6 @@ const distance = require('./src/distance');
 
 let input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
-// input = `
-// 1, 1
-// 1, 6
-// 8, 3
-// 3, 4
-// 5, 5
-// 8, 9
-// `;
-
 let points = input
     .trim()
     .split('\n')
