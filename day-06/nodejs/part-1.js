@@ -2,10 +2,7 @@ const fs = require('fs');
 const last = require('./src/last');
 const sortBy = require('./src/sortBy');
 const rsortBy = require('./src/rsortBy');
-
-function distance(a, b) {
-    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
-}
+const distance = require('./src/distance');
 
 let input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
@@ -54,11 +51,11 @@ for (let row = topLeft.y; row <= bottomRight.y; row++) {
       output += style.green + points[key].code + style.reset;
       continue;
     }
-    const distances = entries.slice(0).reduce((carry, [k, p]) => {
+    const distances = entries.reduce((carry, [k, p]) => {
       carry[k] = distance(pos, p);
       return carry;
     }, {});
-    const closest = sortBy(Object.entries(distances).slice(0), ([, d]) => d);
+    const closest = sortBy(Object.entries(distances), ([, d]) => d);
     let value;
     let s = style.dim;
     if (closest[0][1] === closest[1][1]) {

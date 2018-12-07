@@ -1,11 +1,7 @@
 const fs = require('fs');
 const last = require('./src/last');
 const sortBy = require('./src/sortBy');
-const rsortBy = require('./src/rsortBy');
-
-function distance(a, b) {
-    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
-}
+const distance = require('./src/distance');
 
 let input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
@@ -35,8 +31,6 @@ const byX = sortBy(entries.slice(0), ([, p]) => p.x);
 const byY = sortBy(entries.slice(0), ([, p]) => p.y);
 const topLeft = { x: byX[0][1].x, y: byY[0][1].y };
 const bottomRight = { x: last(byX)[1].x, y: last(byY)[1].y };
-const xEdges = [topLeft.x, bottomRight.x];
-const yEdges = [topLeft.y, bottomRight.y];
 
 const style = {
   reset: '\x1b[0m',
