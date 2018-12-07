@@ -70,6 +70,6 @@ const [, largest] = rsortBy(
   ([, p]) => p.area
 )[0];
 
-// console.log(output); // Uncomment to visualise grid in console (note: set your text size very small).
+if (process.argv.includes('--output')) console.log(output);
 
 console.log(`size of the largest finite area ('${largest.x},${largest.y}' aka '${largest.code}'): ${largest.area}`);

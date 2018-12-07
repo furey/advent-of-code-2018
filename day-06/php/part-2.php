@@ -64,6 +64,6 @@ for ($row = $bounds['y'][0]; $row <= $bounds['y'][1]; $row++) {
     $output .= PHP_EOL;
 }
 
-// echo $output . PHP_EOL; // Uncomment to visualise grid in console (note: set your text size very small).
+if (in_array('--output', $argv)) echo $output . PHP_EOL;
 
 echo "size of the region: $size";

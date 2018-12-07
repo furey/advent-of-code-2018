@@ -56,6 +56,6 @@ for (let row = topLeft.y; row <= bottomRight.y; row++) {
   output += '\n';
 }
 
-// console.log(output); // Uncomment to visualise grid in console (note: set your text size very small).
+if (process.argv.includes('--output')) console.log(output);
 
 console.log(`size of the region: ${size}`);

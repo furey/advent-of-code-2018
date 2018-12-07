@@ -81,6 +81,6 @@ $largest = $rsortBy(array_filter($points, function ($point) {
     return $point['area'];
 })[0];
 
-// echo $output . PHP_EOL; // Uncomment to visualise grid in console (note: set your text size very small).
+if (in_array('--output', $argv)) echo $output . PHP_EOL;
 
 echo "size of the largest finite area ('{$largest['x']},{$largest['y']}' aka '{$largest['code']}'): {$largest['area']}";
