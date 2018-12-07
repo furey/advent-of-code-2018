@@ -4,9 +4,9 @@ $sortBy = require(__DIR__ . '/src/sortBy.php');
 $rsortBy = require(__DIR__ . '/src/rsortBy.php');
 $distance = require(__DIR__ . '/src/distance.php');
 
-$input = file_get_contents(__DIR__ . '/../input.txt');
-
-$input = array_values(explode(PHP_EOL, trim($input)));
+$input = array_values(
+    explode(PHP_EOL, trim(file_get_contents(__DIR__ . '/../input.txt')))
+);
 
 $i = 0;
 $points = array_reduce($input, function ($carry, $point) use (&$i) {
