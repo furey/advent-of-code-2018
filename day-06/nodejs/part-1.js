@@ -7,24 +7,24 @@ const distance = require('./src/distance');
 let input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
 
 let points = input
-    .trim()
-    .split('\n')
-    .reduce((carry, point, i) => {
-        const [x, y] = point.split(', ').map(n => Number(n));
-        const key = `${x},${y}`;
-        const code = String.fromCharCode(65 + i);
-        const area = 1;
-        carry[key] = { x, y, code, area };
-        return carry;
-    }, {});
+  .trim()
+  .split('\n')
+  .reduce((carry, point, i) => {
+    const [x, y] = point.split(', ').map(n => Number(n));
+    const key = `${x},${y}`;
+    const code = String.fromCharCode(65 + i);
+    const area = 1;
+    carry[key] = { x, y, code, area };
+    return carry;
+  }, {});
 
 const entries = Object.entries(points);
 const byX = sortBy(entries.slice(0), ([, p]) => p.x);
 const byY = sortBy(entries.slice(0), ([, p]) => p.y);
-const topLeft = { x: byX[0][1].x, y: byY[0][1].y };
-const bottomRight = { x: last(byX)[1].x, y: last(byY)[1].y };
-const xEdges = [topLeft.x, bottomRight.x];
-const yEdges = [topLeft.y, bottomRight.y];
+const bounds = {
+  x: [byX[0][1].x, last(byX)[1].x],
+  y: [byY[0][1].y, last(byY)[1].y],
+};
 
 const style = {
   reset: '\x1b[0m',
@@ -34,8 +34,8 @@ const style = {
 };
 
 let output = '';
-for (let row = topLeft.y; row <= bottomRight.y; row++) {
-  for (let col = topLeft.x; col <= bottomRight.x; col++) {
+for (let row = bounds.y[0]; row <= bounds.y[1]; row++) {
+  for (let col = bounds.x[0]; col <= bounds.x[1]; col++) {
     let key = `${col},${row}`;
     const pos = { x: col, y: row };
     if (points[key] !== undefined) {
@@ -56,7 +56,7 @@ for (let row = topLeft.y; row <= bottomRight.y; row++) {
       value = points[key].code.toLowerCase();
       points[key].area++;
     }
-    if (xEdges.includes(pos.x) || yEdges.includes(pos.y)) {
+    if (bounds.x.includes(pos.x) || bounds.y.includes(pos.y)) {
       s = style.red;
       if (points[key] !== undefined) points[key].infinite = true;
     }
