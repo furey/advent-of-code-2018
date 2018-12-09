@@ -3,8 +3,7 @@ const tree = require('./src/shared');
 function nodeValue(node) {
   if (!node.childNodes.length) return node.sumMetadataEntries;
   return node.metadataEntries.reduce((carry, entry) => {
-    const i = entry - 1;
-    const childNode = node.childNodes[i] || undefined;
+    const childNode = node.childNodes[entry - 1] || undefined;
     return carry + (!childNode ? 0 : nodeValue(childNode));
   }, 0);
 }
