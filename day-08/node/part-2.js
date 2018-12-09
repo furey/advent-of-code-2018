@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-let input = fs.readFileSync(__dirname + '/../input.txt', 'utf-8');
+const file = process.argv.includes('--example') ? 'input-example.txt' : 'input.txt';
 
-// input = '2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2';
+const input = fs.readFileSync(__dirname + `/../${file}` , 'utf-8');
 
 const numbers = input.split(' ').map(n => n*1);
 
@@ -48,8 +48,6 @@ function getNode(i) {
 }
 
 const tree = getNode(0);
-
-// console.log(tree);
 
 function nodeValue(node) {
     if (!node.childNodes.length) return node.sumMetadataEntries;
