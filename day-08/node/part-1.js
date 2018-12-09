@@ -42,6 +42,7 @@ function getNode(i) {
         header,
         childNodes,
         metadataEntries,
+        sumMetadataEntries: metadataEntries.reduce((carry, entry) => carry + entry, 0),
         length,
     };
 }
@@ -49,7 +50,7 @@ function getNode(i) {
 const tree = getNode(0);
 
 function sumMetadataEntries(node) {
-    let sum = node.metadataEntries.reduce((carry, entry) => carry + entry, 0);
+    let sum = node.sumMetadataEntries;
     if (!node.childNodes.length) return sum;
     return sum + node.childNodes.reduce((carry, childNode) => carry + sumMetadataEntries(childNode), 0);
 }
