@@ -1,6 +1,5 @@
 const fs = require('fs');
 const Node = require('./src/node');
-const rsortBy = require('./src/rsortBy');
 
 const file = process.argv.includes('--example') ? 'input-example.txt' : 'input.txt';
 
