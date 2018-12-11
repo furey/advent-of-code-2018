@@ -31,7 +31,7 @@ function tick() {
   return {points, bounds, width};
 }
 
-let second = 0;
+let seconds = 0;
 let bounds = undefined;
 let width = Infinity;
 let output = '';
@@ -42,7 +42,7 @@ while (true) {
       points = next.points;
       bounds = next.bounds;
       width = next.width;
-      second++;
+      seconds++;
       continue;
   }
   const o = points.map(p => {
@@ -58,7 +58,6 @@ while (true) {
   for (let row = bounds.y[0]; row <= bounds.y[1]; row++) {
     for (let col = bounds.x[0]; col <= bounds.x[1]; col++) {
       const key = `${col},${row}`;
-      const pos = { x: col, y: row };
       output += o[key] !== undefined ? '#' : '.';
     }
     output += '\n';
@@ -68,5 +67,5 @@ while (true) {
 
 module.exports = {
   output,
-  seconds: second,
+  seconds,
 };
