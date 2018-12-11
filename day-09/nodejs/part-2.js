@@ -17,7 +17,7 @@ let marble = new Node(0);
 
 while (marbleValue < lastMarbleWorth) {
   marbleValue++;
-  const currentPlayerIndex = marbleValue % totalPlayers;
+  const currentPlayerIndex = (marbleValue - 1) % totalPlayers;
   if (marbleValue % 23 === 0) {
     playerScores[currentPlayerIndex] += marbleValue;
     let toRemove = marble.getPrev(7);
