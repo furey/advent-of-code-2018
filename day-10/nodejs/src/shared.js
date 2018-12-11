@@ -13,7 +13,6 @@ let points = input
       pos: { x: +matches[1], y: +matches[2] },
       vel: { x: +matches[3], y: +matches[4] },
     }
-    return matches;
   });
 
 function tick() {
