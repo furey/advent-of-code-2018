@@ -24,22 +24,26 @@ for (let row = 1; row <= gridSize; row++) {
   }
 }
 
-const squares = {};
-let key, totalPower;
-let size = 3;
-for (let row = 1; row <= gridSize - (size - 1); row++) {
-  for (let col = 1; col <= gridSize - (size - 1); col++) {
-    key = `${col},${row}`;
-    totalPower = 0;
-    for (var i = 0; i <= size - 1; i++) {
-      for (var j = 0; j <= size - 1; j++) {
-        totalPower += cells[row+i][col+j];
+let size = 1;
+let largestTotalPower = 0;
+let key, identifier;
+while (size <= gridSize) {
+  for (let row = 1; row <= gridSize - (size - 1); row++) {
+    for (let col = 1; col <= gridSize - (size - 1); col++) {
+      key = `${col},${row},${size}`;
+      totalPower = 0;
+      for (var i = 0; i <= size - 1; i++) {
+        for (var j = 0; j <= size - 1; j++) {
+          totalPower += cells[row+i][col+j];
+        }
+      }
+      if (totalPower >= largestTotalPower) {
+        largestTotalPower = totalPower;
+        identifier = key;
       }
     }
-    squares[key] = totalPower;
   }
+  size++;
 }
 
-const cell = rsortBy(Object.entries(squares).sort(), ([, totalPower]) => totalPower)[0];
-
-console.log(`X,Y coordinate of the top-left fuel cell of the 3x3 square with the largest total power: ${cell[0]} (total power ${cell[1]})`);
+console.log(`X,Y,size identifier of the square with the largest total power: ${identifier}`);
