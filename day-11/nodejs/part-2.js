@@ -1,5 +1,4 @@
 const fs = require('fs');
-const rsortBy = require('./src/rsortBy');
 
 const file = process.argv.includes('--example') ? 'input-example.txt' : 'input.txt';
 
@@ -10,12 +9,11 @@ const gridSerialNumber = +(input.trim().match(/^(\d+)$/m)[1]);
 const gridSize = 300;
 
 const cells = {};
-let rackId, powerLevel;
 for (let row = 1; row <= gridSize; row++) {
   cells[row] = {};
   for (let col = 1; col <= gridSize; col++) {
-    rackId = col + 10;
-    powerLevel = rackId * row;
+    const rackId = col + 10;
+    let powerLevel = rackId * row;
     powerLevel += gridSerialNumber;
     powerLevel *= rackId;
     powerLevel = +(powerLevel.toString().slice(-3, -2));
@@ -61,4 +59,4 @@ while (size <= gridSize) {
   size++;
 }
 
-console.log(`X,Y,size identifier of the square with the largest total power: ${largestIdentifier} (${largestTotalPower})`);
+console.log(`X,Y,size identifier with the largest total power: ${largestIdentifier} (${largestTotalPower})`);

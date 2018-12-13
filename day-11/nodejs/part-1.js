@@ -1,5 +1,4 @@
 const fs = require('fs');
-const rsortBy = require('./src/rsortBy');
 
 const file = process.argv.includes('--example') ? 'input-example.txt' : 'input.txt';
 
@@ -10,12 +9,11 @@ const gridSerialNumber = +(input.trim().match(/^(\d+)$/m)[1]);
 const gridSize = 300;
 
 const cells = {};
-let rackId, powerLevel;
 for (let row = 1; row <= gridSize; row++) {
   cells[row] = {};
   for (let col = 1; col <= gridSize; col++) {
-    rackId = col + 10;
-    powerLevel = rackId * row;
+    const rackId = col + 10;
+    let powerLevel = rackId * row;
     powerLevel += gridSerialNumber;
     powerLevel *= rackId;
     powerLevel = +(powerLevel.toString().slice(-3, -2));
@@ -24,22 +22,23 @@ for (let row = 1; row <= gridSize; row++) {
   }
 }
 
-const squares = {};
-let key, totalPower;
 let size = 3;
+let largestTotalPower = 0;
+let largestIdentifier;
 for (let row = 1; row <= gridSize - (size - 1); row++) {
   for (let col = 1; col <= gridSize - (size - 1); col++) {
-    key = `${col},${row}`;
-    totalPower = 0;
+    const key = `${col},${row}`;
+    let totalPower = 0;
     for (var i = 0; i <= size - 1; i++) {
       for (var j = 0; j <= size - 1; j++) {
-        totalPower += cells[row+i][col+j];
+        totalPower += cells[row + i][col + j];
       }
     }
-    squares[key] = totalPower;
+    if (totalPower >= largestTotalPower) {
+      largestTotalPower = totalPower;
+      largestIdentifier = key;
+    }
   }
 }
 
-const cell = rsortBy(Object.entries(squares).sort(), ([, totalPower]) => totalPower)[0];
-
-console.log(`X,Y coordinate of the top-left fuel cell of the 3x3 square with the largest total power: ${cell[0]} (total power ${cell[1]})`);
+console.log(`X,Y coordinate with the largest total power: ${largestIdentifier} (${largestTotalPower})`);
