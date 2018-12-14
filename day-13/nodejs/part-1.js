@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const file = process.argv.includes('--example') ? 'input-example.txt' : 'input.txt';
+const file = process.argv.includes('--example') ? 'input-example-part-1.txt' : 'input.txt';
 
 const input = fs.readFileSync(`${__dirname}/../${file}`, 'utf-8');
 
@@ -38,7 +38,7 @@ carts.forEach(({pos, dir}, i) => {
 });
 
 function render() {
-  output = '';
+  let output = '';
   for (let row = 0; row < height; row ++) {
     for (let col = 0; col < width; col++) {
       let value = grid[`${col},${row}`] || ' ';
@@ -49,6 +49,12 @@ function render() {
   }
   console.log(output);
 }
+
+const output = process.argv.includes('--output');
+
+const tickEvery = process.argv.includes('--tickEvery')
+  ? +process.argv[process.argv.indexOf('--tickEvery') + 1]
+  : 1;
 
 const tick = setInterval(() => {
   carts = carts.sort((a, b) => {
@@ -118,15 +124,17 @@ const tick = setInterval(() => {
       other.id !== cart.id &&
       other.pos.col == carts[i].pos.col &&
       other.pos.row == carts[i].pos.row);
-    console.clear();
+    if (output) console.clear();
     if (otherIndex !== -1) {
-      clearInterval(tick);
       carts[i].smashed = true;
       carts[otherIndex].smashed = true;
-      // render();
+      if (output) render();
       console.log(`location of the first crash: ${carts[i].pos.col},${carts[i].pos.row}`);
+      clearInterval(tick);
       return;
     }
-    // render();
+    if (output) render();
   }
-}, 1);
+}, tickEvery);
+
+if (output) render();
