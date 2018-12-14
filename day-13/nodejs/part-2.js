@@ -36,26 +36,7 @@ carts.forEach(({pos, dir}, i) => {
   grid[key] = track;
 });
 
-function render() {
-  let output = '';
-  for (let row = 0; row < height; row ++) {
-    for (let col = 0; col < width; col++) {
-      let value = grid[`${col},${row}`] || ' ';
-      const cart = carts.find(c => c.pos.col === col && c.pos.row === row);
-      output += cart ? (cart.smashed ? 'X' : cart.dir) : value;
-    }
-    output += '\n';
-  }
-  console.log(output);
-}
-
-const output = process.argv.includes('--output');
-
-const tickEvery = process.argv.includes('--tickEvery')
-  ? +process.argv[process.argv.indexOf('--tickEvery') + 1]
-  : 1;
-
-const tick = setInterval(() => {
+while (true) {
   carts = carts.sort((a, b) => {
     if (a.pos.row === b.pos.row) {
       if (a.pos.col === b.pos.col) return 0;
@@ -134,13 +115,8 @@ const tick = setInterval(() => {
     }
   }
   carts = carts.filter(c => !c.smashed);
-  if (output) console.clear();
-  if (output) render();
   if (carts.length <= 1) {
     console.log(`location of the last cart: ${carts[0].pos.col},${carts[0].pos.row}`);
-    clearInterval(tick);
     return;
   }
-}, tickEvery);
-
-if (output) render();
+}
