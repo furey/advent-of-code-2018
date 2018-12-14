@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const fs = require('fs');
 
 const file = process.argv.includes('--example') ? 'input-example.txt' : 'input.txt';
