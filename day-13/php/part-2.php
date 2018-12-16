@@ -119,8 +119,10 @@ while (true) {
     $carts = array_values(array_filter($carts, function ($cart) {
         return $cart['smashed'] !== true;
     }));
-    if (count($carts) <= 1) {
-        echo sprintf('location of the last cart: %d,%d', $carts[0]['pos']['col'], $carts[0]['pos']['row']) . PHP_EOL;
-        return;
-    }
+    if (count($carts) > 1) continue;
+    exit(sprintf(
+        'location of the last cart: %d,%d',
+        $carts[0]['pos']['col'],
+        $carts[0]['pos']['row']
+    ) . PHP_EOL);
 }

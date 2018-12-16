@@ -1,15 +1,14 @@
 const fs = require('fs');
 
 const file = process.argv.includes('--example') ? 'input-example-part-1.txt' : 'input.txt';
-
 const input = fs.readFileSync(`${__dirname}/../${file}`, 'utf-8');
 
 const lines = input.split('\n').filter(line => line.length);
 const height = lines.length;
 const width = Math.max(...lines.map(line => line.length));
 
-let carts = [];
 const grid = {};
+let carts = [];
 for (let row = 0; row < height; row ++) {
   const line = lines[row];
   for (let col = 0; col < width; col++) {
@@ -55,6 +54,8 @@ const output = process.argv.includes('--output');
 const tickEvery = process.argv.includes('--tickEvery')
   ? +process.argv[process.argv.indexOf('--tickEvery') + 1]
   : 1;
+
+if (output) render();
 
 const tick = setInterval(() => {
   carts = carts.sort((a, b) => {
@@ -136,5 +137,3 @@ const tick = setInterval(() => {
     if (output) render();
   }
 }, tickEvery * 1000);
-
-if (output) render();

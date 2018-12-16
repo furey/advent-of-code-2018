@@ -1,15 +1,14 @@
 const fs = require('fs');
 
 const file = process.argv.includes('--example') ? 'input-example-part-2.txt' : 'input.txt';
-
 const input = fs.readFileSync(`${__dirname}/../${file}`, 'utf-8');
 
 const lines = input.split('\n').filter(line => line.length);
 const height = lines.length;
 const width = Math.max(...lines.map(line => line.length));
 
-let carts = [];
 const grid = {};
+let carts = [];
 for (let row = 0; row < height; row ++) {
   const line = lines[row];
   for (let col = 0; col < width; col++) {
@@ -22,6 +21,7 @@ for (let row = 0; row < height; row ++) {
         pos: { col, row },
         dir: value,
         intersections: 0,
+        smashed: false,
       });
     }
   }
@@ -79,44 +79,41 @@ while (true) {
       carts[otherIndex].smashed = true;
       smash = true;
     });
-    if (!smash) {
-      switch (grid[nextKey]) {
-        case '\\':
-          if (cart.dir === '>') nextDir = 'v';
-          if (cart.dir === '<') nextDir = '^';
-          if (cart.dir === 'v') nextDir = '>';
-          if (cart.dir === '^') nextDir = '<';
-          break;
-        case '/':
-          if (cart.dir === '>') nextDir = '^';
-          if (cart.dir === '<') nextDir = 'v';
-          if (cart.dir === 'v') nextDir = '<';
-          if (cart.dir === '^') nextDir = '>';
-          break;
-        case '+':
-          carts[i].intersections++;
-          switch (carts[i].intersections % 3) {
-            case 1:
-              if (cart.dir === '>') nextDir = '^';
-              if (cart.dir === '<') nextDir = 'v';
-              if (cart.dir === 'v') nextDir = '>';
-              if (cart.dir === '^') nextDir = '<';
-              break;
-            case 0:
-              if (cart.dir === '>') nextDir = 'v';
-              if (cart.dir === '<') nextDir = '^';
-              if (cart.dir === 'v') nextDir = '<';
-              if (cart.dir === '^') nextDir = '>';
-              break;
-          }
-          break;
-      }
-      carts[i].dir = nextDir;
+    if (smash) continue;
+    switch (grid[nextKey]) {
+      case '\\':
+        if (cart.dir === '>') nextDir = 'v';
+        if (cart.dir === '<') nextDir = '^';
+        if (cart.dir === 'v') nextDir = '>';
+        if (cart.dir === '^') nextDir = '<';
+        break;
+      case '/':
+        if (cart.dir === '>') nextDir = '^';
+        if (cart.dir === '<') nextDir = 'v';
+        if (cart.dir === 'v') nextDir = '<';
+        if (cart.dir === '^') nextDir = '>';
+        break;
+      case '+':
+        carts[i].intersections++;
+        switch (carts[i].intersections % 3) {
+          case 1:
+            if (cart.dir === '>') nextDir = '^';
+            if (cart.dir === '<') nextDir = 'v';
+            if (cart.dir === 'v') nextDir = '>';
+            if (cart.dir === '^') nextDir = '<';
+            break;
+          case 0:
+            if (cart.dir === '>') nextDir = 'v';
+            if (cart.dir === '<') nextDir = '^';
+            if (cart.dir === 'v') nextDir = '<';
+            if (cart.dir === '^') nextDir = '>';
+            break;
+        }
+        break;
     }
+    carts[i].dir = nextDir;
   }
   carts = carts.filter(c => !c.smashed);
-  if (carts.length <= 1) {
-    console.log(`location of the last cart: ${carts[0].pos.col},${carts[0].pos.row}`);
-    return;
-  }
+  if (carts.length > 1) continue;
+  return console.log(`location of the last cart: ${carts[0].pos.col},${carts[0].pos.row}`);
 }

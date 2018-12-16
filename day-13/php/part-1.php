@@ -1,7 +1,6 @@
 <?php
 
 $file = in_array('--example', $argv) ? 'input-example-part-1.txt' : 'input.txt';
-
 $input = file_get_contents(__DIR__ . "/../$file");
 
 $lines = array_filter(explode(PHP_EOL, $input));
@@ -10,8 +9,8 @@ $width = max(array_map(function ($line) {
     return strlen($line);
 }, $lines));
 
-$carts = [];
 $grid = [];
+$carts = [];
 for ($row = 0; $row < $height; $row ++) {
     $line = $lines[$row];
     for ($col = 0; $col < $width; $col++) {
@@ -148,7 +147,11 @@ while (true) {
             $carts[$i]['smashed'] = true;
             $carts[$otherIndex]['smashed'] = true;
             if ($output) render();
-            exit(sprintf('location of the first crash: %d,%d', $carts[$i]['pos']['col'], $carts[$i]['pos']['row']));
+            exit(sprintf(
+                'location of the first crash: %d,%d',
+                $carts[$i]['pos']['col'],
+                $carts[$i]['pos']['row']
+            ) . PHP_EOL);
         }
         if ($output) render();
     }
