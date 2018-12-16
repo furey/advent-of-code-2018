@@ -4,7 +4,7 @@ const file = process.argv.includes('--example') ? 'input-example-part-1.txt' : '
 
 const input = fs.readFileSync(`${__dirname}/../${file}`, 'utf-8');
 
-const lines = input.trim().split('\n');
+const lines = input.split('\n').filter(line => line.length);
 const height = lines.length;
 const width = Math.max(...lines.map(line => line.length));
 
@@ -135,6 +135,6 @@ const tick = setInterval(() => {
     }
     if (output) render();
   }
-}, tickEvery);
+}, tickEvery * 1000);
 
 if (output) render();
